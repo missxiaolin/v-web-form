@@ -22,3 +22,8 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### 稳定性方案
+
+<img src="http://missxiaolin.com/wdxfa-20210607.png" />
+
