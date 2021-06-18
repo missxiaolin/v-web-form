@@ -1,15 +1,23 @@
 <template>
-  <div class="home">
-    ceshi
-  </div>
+  <a-spin :spinning="creating" tip="Loading...">
+  </a-spin>
 </template>
 
 <script>
-// @ is an alias to /src
+import { reactive, toRefs } from 'vue'
 
 export default {
   name: 'Home',
   components: {
+  },
+  setup() {
+    const state = reactive({
+      creating: false,
+    })
+
+    return {
+      ...toRefs(state)
+    }
   }
 }
 </script>
