@@ -1,13 +1,73 @@
 <template>
-    <div>
-        header
+  <div class="header">
+    <div :class="['header-menu', className]">
+      <div class="left">
+        <slot name="logo">
+          <div class="logo">
+            <router-link to="/">
+              <div class="logo-container" />
+            </router-link>
+          </div>
+        </slot>
+        <slot name="pageTitle"></slot>
+      </div>
+      <a-menu
+        :selectable="false"
+        class="el-menu-demo"
+        mode="horizontal"
+        @select="(path) => handleSelect(path)"
+      >
+        <a-menu-item>
+          <a href="https://github.com/missxiaolin" target="_blank">
+            Github
+          </a>
+        </a-menu-item>
+        <slot name="menu">
+          <a-menu-item>
+            <router-link to="/dashboard"> 工作台 </router-link>
+          </a-menu-item>
+        </slot>
+      </a-menu>
     </div>
+  </div>
 </template>
 
 <script>
+import { useRouter } from "vue-router";
+import { onBeforeUnmount, ref } from "vue";
+
 export default {
-    name: 'Header'
-}
+  name: "Header",
+  props: {
+    type: String,
+  },
+  setup(props) {
+    const router = useRouter();
+    let className = ref(props.type || "default");
+    const setClassName = () => {
+      if (props.type) return;
+      const top = document.documentElement.scrollTop || document.body.scrollTop;
+      className.value = top > 30 ? "white" : "default";
+    };
+    document.addEventListener("scroll", setClassName);
+    onBeforeUnmount(() => {
+      console.log("unmount");
+      document.removeEventListener("scroll", setClassName);
+    });
+
+    const handleSelect = (path) => {
+      if (!path) return;
+      router.push({
+        path,
+      });
+    };
+
+    return {
+      className,
+      handleSelect,
+    };
+  },
+};
 </script>
 
 <style lang="scss">
@@ -42,7 +102,7 @@ body {
       .ant-menu-item {
         padding: 0 10px;
         &-active {
-          border-bottom: 2px solid rgba(0,0,0,0);
+          border-bottom: 2px solid rgba(0, 0, 0, 0);
         }
       }
     }
@@ -58,11 +118,11 @@ body {
           color: #fff;
           a {
             color: #fff;
-            &:hover, &:focus {
+            &:hover,
+            &:focus {
               background: #615fe1;
             }
           }
-
         }
       }
     }
@@ -77,18 +137,18 @@ body {
           color: #615fe1;
           a {
             color: #615fe1;
-            &:hover, &:focus {
+            &:hover,
+            &:focus {
               background: #fff;
               color: #615fe1;
             }
           }
-
         }
       }
       .logo-container {
         height: 50px;
         width: 100px;
-        background: url('../assets/image/logo.png') no-repeat center center;
+        background: url("../assets/image/logo.png") no-repeat center center;
         background-size: 110%;
       }
     }
@@ -98,7 +158,7 @@ body {
     .logo-container {
       height: 50px;
       width: 100px;
-      background: url('../assets/image/logo.png') no-repeat center center;
+      background: url("../assets/image/logo.png") no-repeat center center;
       background-size: 110%;
     }
   }
