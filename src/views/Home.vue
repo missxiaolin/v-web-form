@@ -8,13 +8,20 @@
         hoverable
         style="width: 240px"
         @click="() => initPage(item)"
-      />
-      <template>
-        <img
-          alt="example"
-          src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-        />
-      </template>
+      >
+        <template #cover>
+          <img
+            alt="example"
+            src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+          />
+        </template>
+        <a-card-meta :title="item.templateName">
+          <template #description>
+            <div>作者：{{ item.author }}</div>
+            <div>版本：{{ item.version }}</div>
+          </template>
+        </a-card-meta>
+      </a-card>
     </div>
   </a-spin>
 </template>
