@@ -24,6 +24,35 @@
       </a-card>
     </div>
   </a-spin>
+  <a-modal
+    v-model:visible="createDialog"
+    title="请填写页面信息"
+    okText="确定"
+    cancelText="取消"
+    :width="560"
+    @ok="createPage"
+  >
+    <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
+      <a-form-item label="项目名称" v-bind="validateInfos.projectName">
+        <a-input placeholder="如：营销活动" v-model:value="projectName" />
+      </a-form-item>
+      <a-form-item label="活动域名" v-bind="validateInfos.gitName">
+        <a-input-group compact>
+          <a-select v-model:value="host">
+            <a-select-option value="https://github.com/missxiaolin">
+              https://github.com/missxiaolin
+            </a-select-option>
+          </a-select>
+          <a-input
+            placeholder="路径"
+            style="width: 95px"
+            v-model:value="gitName"
+          />
+          <div class="fix">/index.html</div>
+        </a-input-group>
+      </a-form-item>
+    </a-form>
+  </a-modal>
 </template>
 
 <script>
@@ -43,14 +72,38 @@ export default {
       creating: false,
     });
 
+    const pageState = reactive({
+      projectName: "",
+      gitName: "",
+      host: "https://github.com/missxiaolin",
+    });
+
+    const rulesRef = reactive({
+      projectName: [
+        {
+          required: true,
+          message: "请输入项目名称",
+        },
+      ],
+      gitName: [
+        {
+          required: true,
+          message: "请输入网站路径",
+        },
+      ],
+    });
+
     const initPage = (config) => {
       state.pageInfo = config;
       state.createDialog = true;
     };
 
+    const createPage = (config) => {};
+
     return {
       ...toRefs(state),
       initPage,
+      createPage,
     };
   },
 };
