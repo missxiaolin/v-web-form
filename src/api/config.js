@@ -1,5 +1,5 @@
 export default {
-    development: 'http://localhost:7001',
-    test: 'http://localhost:7001',
-    production: 'http://localhost:7001',
+    development: 'http://127.0.0.1:7001',
+    test: 'http://127.0.0.1:7001',
+    production: 'http://127.0.0.1:7001',
 }
