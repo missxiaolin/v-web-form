@@ -94,6 +94,7 @@ export default {
     });
 
     market.queryAll().then(({ result }) => {
+      console.log(result)
       state.templateList = result;
     });
 

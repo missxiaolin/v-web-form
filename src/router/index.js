@@ -11,6 +11,10 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard
+  }, {
+    path: '/home',
+    name: 'home',
+    component: Index
   },
 ]
 
