@@ -10,20 +10,27 @@
         </a-button>
       </a-empty>
     </div>
+    <div class="list" v-else>
+    </div>
   </div>
 </template>
 
 
 <script>
 import { reactive, toRefs } from "vue";
+import { useLoadList } from './hooks';
+
 export default {
   name: "DashboardList",
   async setup() {
     const state = reactive({
       list: [],
     });
+    const {loading, loadFn} = useLoadList();
+    state.list = await loadFn();
 
     return {
+      loading,
       ...toRefs(state),
     };
   },
