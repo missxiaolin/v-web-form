@@ -11,6 +11,23 @@
       </a-empty>
     </div>
     <div class="list" v-else>
+      <a-button class="top">
+        <router-link to="/home">创建页面</router-link>
+      </a-button>
+      <a-list
+          class="demo-loadmore-list"
+          :loading="loading"
+          item-layout="horizontal"
+          :data-source="list"
+      >
+        <template #renderItem="{ item }">
+          <a-list-item>
+            <template #actions>
+              <router-link :to="`/edit?id=${item.id}&pageId=${item.git_config.id}`">编辑</router-link>
+            </template>
+          </a-list-item>
+        </template>
+      </a-list>
     </div>
   </div>
 </template>
@@ -26,6 +43,8 @@ export default {
     const state = reactive({
       list: [],
     });
+    const cancel = () => {};
+
     const {loading, loadFn} = useLoadList();
     state.list = await loadFn();
 
