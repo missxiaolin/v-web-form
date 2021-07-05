@@ -25,6 +25,14 @@
             <template #actions>
               <router-link :to="`/edit?id=${item.id}&pageId=${item.git_config.id}`">编辑</router-link>
             </template>
+            <a-list-item-meta>
+              <template #description>
+
+              </template>
+              <template #title>
+                {{ item.pageConfig.config.project_name }}
+              </template>
+            </a-list-item-meta>
           </a-list-item>
         </template>
       </a-list>
