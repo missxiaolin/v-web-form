@@ -27,7 +27,14 @@
             </template>
             <a-list-item-meta>
               <template #description>
-
+                <div class="desc">
+                  <div>
+                    描述：
+                    <span>{{item.desc}}</span>
+                    <a-popover @visibleChange="v => {!v && (visible = null)}" :visible="visible === item.id" trigger="click">
+                    </a-popover>
+                  </div>
+                </div>
               </template>
               <template #title>
                 {{ item.pageConfig.config.project_name }}
