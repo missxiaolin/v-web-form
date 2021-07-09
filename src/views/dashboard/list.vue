@@ -68,10 +68,16 @@
                       />
                     </a-popover>
                   </div>
+                  <div>
+                    更新时间：<span>{{ item.updatedAt }}</span>
+                  </div>
+                  <div>
+                    创建时间：<span>{{ item.createdAt }}</span>
+                  </div>
                 </div>
               </template>
               <template #title>
-                {{ item.page_config.config.project_name }}
+                {{ item.page_config.config.projectName }}
               </template>
             </a-list-item-meta>
           </a-list-item>
@@ -81,26 +87,51 @@
   </div>
 </template>
 
-
 <script>
 import { reactive, toRefs } from "vue";
-import { useLoadList } from "./hooks";
 import { EditOutlined } from "@ant-design/icons-vue";
+import { useLoadList } from "./hooks";
+import { project } from "@/api";
+import { message } from "ant-design-vue";
 
 export default {
-  name: "DashboardList",
   async setup() {
     const state = reactive({
       list: [],
+      loadingMore: false,
+      showLoadingMore: true,
+      visible: null,
+      desc: "",
     });
     const cancel = () => {};
-
     const { loading, loadFn } = useLoadList();
+
     state.list = await loadFn();
+
+    const editDesc = (item) => {
+      state.desc = item.desc;
+      state.visible = item.id;
+    };
+
+    const saveDesc = async (item) => {
+      if (!state.desc) return message.error("请填写描述信息！");
+      await project.updateOtherConfig({
+        data: {
+          desc: state.desc,
+        },
+        id: item.id,
+      });
+      state.list = await loadFn();
+      state.visible = null;
+      message.success("更新成功！");
+    };
 
     return {
       loading,
+      cancel,
       ...toRefs(state),
+      editDesc,
+      saveDesc,
     };
   },
   components: {
@@ -109,11 +140,10 @@ export default {
 };
 </script>
 
-
 <style lang="scss">
 .user-page-list {
   background: #f5f5f5;
-  height: calc(~"100vh - 60px");
+  height: 100vh;
   overflow: auto;
   .list {
     width: 700px;
