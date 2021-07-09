@@ -15,29 +15,63 @@
         <router-link to="/home">创建页面</router-link>
       </a-button>
       <a-list
-          class="demo-loadmore-list"
-          :loading="loading"
-          item-layout="horizontal"
-          :data-source="list"
+        class="demo-loadmore-list"
+        :loading="loading"
+        item-layout="horizontal"
+        :data-source="list"
       >
         <template #renderItem="{ item }">
           <a-list-item>
             <template #actions>
-              <router-link :to="`/edit?id=${item.id}&pageId=${item.git_config.id}`">编辑</router-link>
+              <router-link
+                :to="`/edit?id=${item.id}&pageId=${item.git_config.id}`"
+                >编辑</router-link
+              >
             </template>
             <a-list-item-meta>
               <template #description>
                 <div class="desc">
                   <div>
                     描述：
-                    <span>{{item.desc}}</span>
-                    <a-popover @visibleChange="v => {!v && (visible = null)}" :visible="visible === item.id" trigger="click">
+                    <span>{{ item.desc }}</span>
+                    <a-popover
+                      @visibleChange="
+                        (v) => {
+                          !v && (visible = null);
+                        }
+                      "
+                      :visible="visible === item.id"
+                      trigger="click"
+                    >
+                      <template #content>
+                        <a-input-group size="large">
+                          <a-row :gutter="8">
+                            <a-col :span="18">
+                              <a-input
+                                v-model:value="desc"
+                                style="height: 32px"
+                              />
+                            </a-col>
+                            <a-col :span="5">
+                              <a-button
+                                type="primary"
+                                @click="() => saveDesc(item)"
+                                >确定</a-button
+                              >
+                            </a-col>
+                          </a-row>
+                        </a-input-group>
+                      </template>
+                      <EditOutlined
+                        @click="() => editDesc(item)"
+                        style="cursor: pointer"
+                      />
                     </a-popover>
                   </div>
                 </div>
               </template>
               <template #title>
-                {{ item.pageConfig.config.project_name }}
+                {{ item.page_config.config.project_name }}
               </template>
             </a-list-item-meta>
           </a-list-item>
@@ -50,7 +84,8 @@
 
 <script>
 import { reactive, toRefs } from "vue";
-import { useLoadList } from './hooks';
+import { useLoadList } from "./hooks";
+import { EditOutlined } from "@ant-design/icons-vue";
 
 export default {
   name: "DashboardList",
@@ -60,13 +95,16 @@ export default {
     });
     const cancel = () => {};
 
-    const {loading, loadFn} = useLoadList();
+    const { loading, loadFn } = useLoadList();
     state.list = await loadFn();
 
     return {
       loading,
       ...toRefs(state),
     };
+  },
+  components: {
+    EditOutlined,
   },
 };
 </script>
