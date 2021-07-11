@@ -20,6 +20,22 @@
       </template>
       <template #menu>
         <a-menu-item @click="rollback"> <UndoOutlined />撤销 </a-menu-item>
+        <a-menu-item @click="next"> <RedoOutlined />前进 </a-menu-item>
+        <a-menu-item @click="() => saveConfig()">
+          <SaveOutlined />保存
+        </a-menu-item>
+        <a-menu-item @click="() => setPreview(true, store)">
+          <EyeOutlined />预览
+        </a-menu-item>
+        <a-menu-item @click="() => setRelease(true)">
+          <a-button type="primary">发布</a-button>
+        </a-menu-item>
+        <a-menu-item class="dash">
+          <div class="line"></div>
+        </a-menu-item>
+        <a-menu-item>
+          <router-link to="/dashboard"> 工作台 </router-link>
+        </a-menu-item>
       </template>
     </Header>
     <div>edit</div>
@@ -29,7 +45,13 @@
 
 <script>
 import Header from "@/components/header";
-import { UndoOutlined, SettingOutlined } from "@ant-design/icons-vue";
+import {
+  UndoOutlined,
+  SettingOutlined,
+  RedoOutlined,
+  SaveOutlined,
+  EyeOutlined
+} from "@ant-design/icons-vue";
 import { useStore } from "vuex";
 import { toRefs, reactive } from "vue";
 
@@ -52,6 +74,7 @@ export default {
     });
 
     const rollback = () => {};
+    const next = () => {};
 
     const getPageSchema = () => {};
 
@@ -59,12 +82,16 @@ export default {
       ...toRefs(state),
       getPageSchema,
       rollback,
+      next,
     };
   },
   components: {
     Header,
     UndoOutlined,
     SettingOutlined,
+    RedoOutlined,
+    SaveOutlined,
+    EyeOutlined
   },
 };
 </script>
