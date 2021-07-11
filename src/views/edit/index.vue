@@ -38,13 +38,14 @@
         </a-menu-item>
       </template>
     </Header>
-    <div>edit</div>
+    <div class="edit-container">edit</div>
   </div>
 </template>
 
 
 <script>
 import Header from "@/components/header";
+import ComponentSelect from './components-select';
 import {
   UndoOutlined,
   SettingOutlined,
