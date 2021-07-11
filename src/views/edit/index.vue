@@ -46,6 +46,8 @@
 <script>
 import Header from "@/components/header";
 import ComponentSelect from './components-select';
+import Form from './form';
+
 import {
   UndoOutlined,
   SettingOutlined,
@@ -88,6 +90,8 @@ export default {
   },
   components: {
     Header,
+    ComponentSelect,
+    Form,
     UndoOutlined,
     SettingOutlined,
     RedoOutlined,
