@@ -38,22 +38,26 @@
         </a-menu-item>
       </template>
     </Header>
-    <div class="edit-container">edit</div>
+    <div class="edit-container">
+      <div class="component-container">
+        <ComponentSelect />
+      </div>
+    </div>
   </div>
 </template>
 
 
 <script>
 import Header from "@/components/header";
-import ComponentSelect from './components-select';
-import Form from './form';
+import ComponentSelect from "./components-select";
+import Form from "./form";
 
 import {
   UndoOutlined,
   SettingOutlined,
   RedoOutlined,
   SaveOutlined,
-  EyeOutlined
+  EyeOutlined,
 } from "@ant-design/icons-vue";
 import { useStore } from "vuex";
 import { toRefs, reactive } from "vue";
@@ -96,7 +100,7 @@ export default {
     SettingOutlined,
     RedoOutlined,
     SaveOutlined,
-    EyeOutlined
+    EyeOutlined,
   },
 };
 </script>

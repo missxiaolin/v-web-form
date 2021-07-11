@@ -1,5 +1,7 @@
 <template>
-  <div class="select-menu">ssshj</div>
+  <div class="select-menu">
+    <h2 class="title">添加组件</h2>
+  </div>
 </template>
 
 <script>
