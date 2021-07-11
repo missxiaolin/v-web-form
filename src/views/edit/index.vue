@@ -1,30 +1,35 @@
 <template>
-  <Header type="white" class="edit-menu">
-    <template #pageTitle>
-      <div class="page-title">
-        <SettingOutlined
-          @click="getPageSchema"
-          style="margin-right: 10px; cursor: pointer"
-        />
-        <a-input
-          class="title-content"
-          :value="
-            editState && editState.page_config
-              ? editState.page_config.config.projectName
-              : ''
-          "
-          @input="changeProjectName"
-        />
-      </div>
-    </template>
-  </Header>
-  <div>edit</div>
+  <div>
+    <Header type="white" class="edit-menu">
+      <template #pageTitle>
+        <div class="page-title">
+          <SettingOutlined
+            @click="getPageSchema"
+            style="margin-right: 10px; cursor: pointer"
+          />
+          <a-input
+            class="title-content"
+            :value="
+              editState && editState.page_config
+                ? editState.page_config.config.projectName
+                : ''
+            "
+            @input="changeProjectName"
+          />
+        </div>
+      </template>
+      <template #menu>
+        <a-menu-item @click="rollback"> <UndoOutlined />撤销 </a-menu-item>
+      </template>
+    </Header>
+    <div>edit</div>
+  </div>
 </template>
 
 
 <script>
 import Header from "@/components/header";
-import { SettingOutlined } from "@ant-design/icons-vue";
+import { UndoOutlined, SettingOutlined } from "@ant-design/icons-vue";
 import { useStore } from "vuex";
 import { toRefs, reactive } from "vue";
 
@@ -43,17 +48,22 @@ export default {
       showUrl: "",
       visible: true,
       spinning: true,
+      changeProjectName: "",
     });
+
+    const rollback = () => {};
 
     const getPageSchema = () => {};
 
     return {
       ...toRefs(state),
       getPageSchema,
+      rollback,
     };
   },
   components: {
     Header,
+    UndoOutlined,
     SettingOutlined,
   },
 };
