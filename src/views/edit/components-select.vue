@@ -1,6 +1,18 @@
 <template>
   <div class="select-menu">
     <h2 class="title">添加组件</h2>
+    <div class="component-preview">
+      <div class="left-menu">
+        <a-menu
+          style="width: 120px"
+          mode="inline"
+          :selectedKeys="selectedKeys"
+          @select="selectMenu"
+          :default-open-keys="['common']"
+        >
+        </a-menu>
+      </div>
+    </div>
   </div>
 </template>
 
