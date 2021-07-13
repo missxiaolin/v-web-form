@@ -10,15 +10,82 @@
           @select="selectMenu"
           :default-open-keys="['common']"
         >
+          <a-menu-item
+            v-if="editState.pageConfig.components?.length"
+            key="template"
+          >
+            <MailOutlined />
+            模板组件
+          </a-menu-item>
+          <a-sub-menu key="common">
+            <template #title>
+              <span>
+                <AppstoreOutlined />
+                <span>系统组件</span>
+              </span>
+            </template>
+            <a-menu-item
+              :key="item.name"
+              v-for="item in editState.uiConfig.commonComponents"
+            >
+              {{ item.description }}
+            </a-menu-item>
+          </a-sub-menu>
         </a-menu>
+      </div>
+      <div class="list-view">
+        <div
+          @dragstart="(e) => setDragStart(e, true, item)"
+          @dragend="(e) => setDragStart(e, false)"
+          draggable
+          class="co-item"
+          :key="index"
+          v-for="(item, index) in canSelects.length
+            ? canSelects
+            : editState.pageConfig.components"
+        >
+          <a-image class="preview-item" :src="item.snapshot" fit="fit" />
+          <div class="co-title">{{ item.description }}</div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { toRefs, reactive } from "vue";
+import { useStore } from "vuex";
+
 export default {
-  name: "componentsSelect",
+  setup() {
+    const state = reactive({
+      active: "components", // components || commonComponents
+      selectedKeys: ["template"],
+      canSelects: [],
+    });
+    const {
+      state: { edit: editState },
+      commit,
+    } = useStore();
+
+    const selectMenu = ({ key, item }) => {
+      state.selectedKeys[0] = key;
+      if (key === "template") {
+        state.canSelects = editState.pageConfig.components;
+        return;
+      }
+
+      state.canSelects = JSON.parse(
+        editState.uiConfig.commonComponents[item.index].config
+      );
+    };
+    return {
+      editState,
+      ...toRefs(state),
+      selectMenu,
+      setDragStart: (ev, v, data) => commit("setDragStart", { ev, v, data }),
+    };
+  },
 };
 </script>
 

@@ -293,6 +293,7 @@ export default {
   background: #f5f5f5;
   position: relative;
   z-index: 2;
+  height: 100vh;
   .se-page-path-container {
     position: relative;
     display: flex;
