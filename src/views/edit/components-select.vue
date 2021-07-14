@@ -14,13 +14,13 @@
             v-if="editState.pageConfig.components?.length"
             key="template"
           >
-            <MailOutlined />
+            <!-- <MailOutlined /> -->
             模板组件
           </a-menu-item>
           <a-sub-menu key="common">
             <template #title>
               <span>
-                <AppstoreOutlined />
+                <!-- <AppstoreOutlined /> -->
                 <span>系统组件</span>
               </span>
             </template>
