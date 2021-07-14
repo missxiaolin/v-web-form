@@ -1,10 +1,26 @@
 <template>
-  <div class="form-menu">1</div>
+  <div class="form-menu">
+    <FromRender :currentComponent="editState.editConfig.currentComponent" />
+  </div>
 </template>
 
 <script>
+import FromRender from "@/components/form-render";
+import { useStore } from "vuex";
+
 export default {
-  name: "From",
+  setup() {
+    const {
+      state: { edit: editState },
+    } = useStore();
+
+    return {
+      editState,
+    };
+  },
+  components: {
+    FromRender,
+  },
 };
 </script>
 
@@ -12,6 +28,6 @@ export default {
 .form-menu {
   width: 100%;
   background: #fff;
-  height: 100vh;
+  height: calc(~"100vh - 60px");
 }
 </style>
