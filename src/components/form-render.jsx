@@ -1,6 +1,6 @@
 import FromRender from 'vue3-form-render/lib/vue3-form-render.common';
 import 'vue3-form-render/lib/vue3-form-render.css';
-import './form-render.less';
+import './form-render.scss';
 
 import {useStore} from 'vuex';
 
