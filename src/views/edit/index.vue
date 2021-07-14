@@ -1,51 +1,148 @@
 <template>
-  <div>
-    <Header type="white" class="edit-menu">
-      <template #pageTitle>
-        <div class="page-title">
-          <SettingOutlined
-            @click="getPageSchema"
-            style="margin-right: 10px; cursor: pointer"
-          />
-          <a-input
-            class="title-content"
-            :value="
-              editState && editState.page_config
-                ? editState.page_config.config.projectName
-                : ''
-            "
-            @input="changeProjectName"
-          />
-        </div>
-      </template>
-      <template #menu>
-        <a-menu-item @click="rollback"> <UndoOutlined />撤销 </a-menu-item>
-        <a-menu-item @click="next"> <RedoOutlined />前进 </a-menu-item>
-        <a-menu-item @click="() => saveConfig()">
-          <SaveOutlined />保存
-        </a-menu-item>
-        <a-menu-item @click="() => setPreview(true, store)">
-          <EyeOutlined />预览
-        </a-menu-item>
-        <a-menu-item @click="() => setRelease(true)">
-          <a-button type="primary">发布</a-button>
-        </a-menu-item>
-        <a-menu-item class="dash">
-          <div class="line"></div>
-        </a-menu-item>
-        <a-menu-item>
-          <router-link to="/dashboard"> 工作台 </router-link>
-        </a-menu-item>
-      </template>
-    </Header>
-    <div class="edit-container">
-      <div class="component-container">
-        <ComponentSelect />
+  <Header type="white" class="edit-menu">
+    <template #pageTitle>
+      <div class="page-title">
+        <SettingOutlined
+          @click="getPageSchema"
+          style="margin-right: 10px; cursor: pointer"
+        />
+        <a-input
+          class="title-content"
+          :value="editState.pageConfig.config.projectName"
+          @input="changeProjectName"
+        />
       </div>
+    </template>
+    <template #menu>
+      <a-menu-item @click="rollback"> <UndoOutlined />撤销 </a-menu-item>
+      <a-menu-item @click="next"> <RedoOutlined />前进 </a-menu-item>
+      <a-menu-item @click="() => saveConfig()">
+        <SaveOutlined />保存
+      </a-menu-item>
+      <a-menu-item @click="() => setPreview(true, store)">
+        <EyeOutlined />预览
+      </a-menu-item>
+      <a-menu-item @click="() => setRelease(true)">
+        <a-button type="primary">发布</a-button>
+      </a-menu-item>
+      <a-menu-item class="dash">
+        <div class="line"></div>
+      </a-menu-item>
+      <a-menu-item>
+        <router-link to="/dashboard"> 工作台 </router-link>
+      </a-menu-item>
+    </template>
+  </Header>
+  <div class="edit-container">
+    <div class="component-container">
+      <ComponentSelect />
+    </div>
+    <div class="editor-view">
+      <div class="se-page-path-container">
+        <div class="se-page-path">
+          <div class="se-pp-url">
+            <span>{{ showUrl }}</span>
+          </div>
+          <div class="se-pp-share">
+            <LinkOutlined />
+          </div>
+        </div>
+      </div>
+      <div class="main-container">
+        <div class="preview-container">
+          <a-spin :spinning="spinning">
+            <iframe
+              @load="initConfig"
+              id="frame"
+              frameborder="0"
+              class="pre-view"
+              :src="url"
+              :style="{
+                height: containerHeight + 'px',
+              }"
+            />
+            <div
+              @drop="drop_handler"
+              @dragover="dragover_handler"
+              v-show="editState.uiConfig.dragStart"
+              class="drag-hover"
+            />
+          </a-spin>
+        </div>
+        <div :style="hoverStyle" class="se-view-hover-tip"></div>
+        <div :style="activeStyle" class="se-view-active-tip"></div>
+        <div
+          v-show="toolStyle.top"
+          :style="{
+            top: toolStyle.top,
+          }"
+          class="se-view-tools"
+          id="se-view-tools"
+        >
+          <div
+            :class="[
+              'sev-tools-move',
+              (isTop || isBottom) && 'sev-tools-move-single',
+            ]"
+          >
+            <ArrowUpOutlined
+              @click="changeIndex(-1)"
+              v-if="!isTop"
+              class="fd-iconfont"
+            />
+            <ArrowDownOutlined
+              @click="changeIndex(1)"
+              v-if="!isBottom"
+              class="fd-iconfont"
+            />
+          </div>
+          <div class="sev-tools-copy">
+            <CopyOutlined @click="copyComponent" class="fd-iconfont" />
+          </div>
+          <div class="sev-tools-copy">
+            <DeleteOutlined
+              @click="() => deleteComponent()"
+              class="fd-iconfont"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      :style="{
+        position: 'relative',
+        width: visible ? '350px' : '',
+      }"
+      class="form-container-main"
+    >
+      <a-drawer
+        :mask="false"
+        placement="right"
+        :closable="false"
+        :visible="visible"
+        :get-container="false"
+        :wrap-style="{ position: 'absolute' }"
+        @close="() => onClose(false)"
+        :width="350"
+      >
+        <Form />
+        <template v-slot:handle>
+          <DoubleLeftOutlined
+            v-if="!visible"
+            @click="() => onClose(true)"
+            class="draw-op"
+          />
+          <DoubleRightOutlined
+            v-else
+            @click="() => onClose(false)"
+            class="draw-op"
+          />
+        </template>
+      </a-drawer>
     </div>
   </div>
 </template>
-
 
 <script>
 import Header from "@/components/header";
@@ -54,16 +151,30 @@ import Form from "./form";
 
 import {
   UndoOutlined,
-  SettingOutlined,
   RedoOutlined,
-  SaveOutlined,
   EyeOutlined,
+  SaveOutlined,
+  SettingOutlined,
+  DoubleRightOutlined,
+  DoubleLeftOutlined,
+  ArrowUpOutlined,
+  CopyOutlined,
+  DeleteOutlined,
+  ArrowDownOutlined,
+  LinkOutlined,
 } from "@ant-design/icons-vue";
+import { toRefs, reactive, watch, toRaw } from "vue";
 import { useStore } from "vuex";
-import { toRefs, reactive } from "vue";
+import { useRoute } from "vue-router";
+import { project, component } from "@/api";
+import { useEditor } from "./hooks";
+import { message } from "ant-design-vue";
+
+const postMsgToChild = (msg) => {
+  window.frames[0] && window.frames[0].postMessage(msg, "*");
+};
 
 export default {
-  name: "Edit",
   setup() {
     const {
       state: { edit: editState },
@@ -77,37 +188,156 @@ export default {
       showUrl: "",
       visible: true,
       spinning: true,
-      changeProjectName: "",
+    });
+    const { editorState, eventInit, init, getIndex, setFixedStyle } =
+      useEditor();
+    const router = useRoute();
+
+    console.log(project)
+
+    Promise.all([
+      project.query({ id: router.query.id }),
+      component.query(),
+    ]).then(([{ result }, { result: componentRes }]) => {
+      state.data = result[0];
+      const targetConfig = result[0].pageConfig;
+      state.name = result[0].name;
+      state.url = `http://localhost:8080/api/static/index.html?isEdit=true`;
+      state.showUrl = `http://localhost:8080/api/static/index.html`;
+      dispatch("returnConfig", {
+        targetConfig: targetConfig,
+        pageData: state.data,
+        releaseStatus: result[0].releaseInfo,
+        commonComponents: componentRes,
+      });
     });
 
-    const rollback = () => {};
-    const next = () => {};
+    const initConfig = () => {
+      eventInit((index) => {
+        state.current = index;
+        postMsgToChild({ type: "changeIndex", data: state.current });
+      });
+      watch(
+        () => editState.editConfig.currentIndex,
+        () => {
+          state.visible = true;
+        }
+      );
+      watch(
+        [
+          () => editState.pageConfig.userSelectComponents,
+          () => editState.editConfig.currentIndex,
+        ],
+        () => {
+          init(editState.editConfig.currentIndex);
+          setFixedStyle(editState.editConfig.currentIndex);
+        }
+      );
+      state.spinning = false;
+      // 初始化页面
+      postMsgToChild({ type: "getConfig" });
+      if (editState.pageConfig.components.length) {
+        // 编辑
+        postMsgToChild({
+          type: "setConfig",
+          data: toRaw(editState.pageConfig),
+        });
+      }
+      postMsgToChild({
+        type: "changeIndex",
+        data: editState.editConfig.currentIndex,
+      });
+    };
 
-    const getPageSchema = () => {};
+    const changeIndex = (op) => {
+      postMsgToChild({
+        type: "sortComponent",
+        data: { op, index: editorState.current },
+      });
+    };
+
+    const copyComponent = () => {
+      postMsgToChild({ type: "copyComponent", data: editorState.current });
+    };
+
+    const deleteComponent = (index) => {
+      postMsgToChild({
+        type: "deleteComponent",
+        data: index !== undefined ? index : editorState.current,
+      });
+    };
+
+    const dragover_handler = (ev) => {
+      ev.preventDefault();
+    };
+
+    const drop_handler = (ev) => {
+      ev.preventDefault();
+      const data = ev.dataTransfer.getData("text/plain");
+      const { layerY } = ev;
+      const index = getIndex(layerY);
+      commit("addComponent", { data: JSON.parse(data), index });
+      commit("setDragStart", {
+        v: false,
+      });
+    };
+
+    const onDrag = ({ left, top }, index, props) => {
+      postMsgToChild({ type: "changeIndex", data: index });
+      commit("changeProps", {
+        ...props,
+        x: left,
+        y: top,
+      });
+    };
+
+    const setRelease = () => {
+      // todo 发布
+      message.info("玩命开发中，敬请期待！");
+    };
+
+    const setPreview = () => {
+      // todo 发布
+      message.info("玩命开发中，敬请期待！");
+    };
 
     return {
+      ...toRefs(editorState),
       ...toRefs(state),
-      getPageSchema,
-      rollback,
-      next,
+      initConfig,
+      editState,
+      changeIndex,
+      copyComponent,
+      deleteComponent,
+      dragover_handler,
+      drop_handler,
+      onDrag,
+      setRelease,
+      setPreview,
     };
   },
   components: {
+    Form,
     Header,
     ComponentSelect,
-    Form,
     UndoOutlined,
-    SettingOutlined,
     RedoOutlined,
-    SaveOutlined,
     EyeOutlined,
+    SaveOutlined,
+    SettingOutlined,
+    DoubleRightOutlined,
+    DoubleLeftOutlined,
+    ArrowUpOutlined,
+    CopyOutlined,
+    DeleteOutlined,
+    ArrowDownOutlined,
+    LinkOutlined,
   },
 };
 </script>
-
 <style lang="scss">
 .loading {
-  height: 100vh;
+  height: calc(~"100vh - 60px");
   width: 100%;
 }
 .do-icon {
@@ -293,7 +523,6 @@ export default {
   background: #f5f5f5;
   position: relative;
   z-index: 2;
-  height: 100vh;
   .se-page-path-container {
     position: relative;
     display: flex;
