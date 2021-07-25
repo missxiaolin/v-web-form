@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Index from '../views/index/index.vue'
 import Dashboard from '../views/dashboard/index.vue';
 import Edit from '../views/edit/index';
+import Intro from '../views/intro/index';
 
 const routes = [
   {
@@ -20,6 +21,10 @@ const routes = [
     path: '/edit',
     name: 'edit',
     component: Edit
+  }, {
+    path: '/:pathMatch(.*)*',
+    name: 'intro',
+    component: Intro
   },
 ]
 
