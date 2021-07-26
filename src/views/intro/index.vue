@@ -20,6 +20,6 @@ export default {
   width: 100%;
   background: #fff;
   overflow-x: hidden;
-
+    
 }
 </style>
