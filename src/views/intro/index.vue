@@ -19,7 +19,9 @@
             </router-link>
           </div>
         </div>
+        <div class="fd-home-banner-content-img"></div>
       </div>
+      <i class="fd-home-banner-bottom"></i>
     </div>
   </div>
 </template>
@@ -36,9 +38,5 @@ export default {
 </script>
 
 <style lang="scss">
-#pg-index {
-  width: 100%;
-  background: #fff;
-  overflow-x: hidden;
-}
+
 </style>
