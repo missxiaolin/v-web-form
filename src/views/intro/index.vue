@@ -23,6 +23,11 @@
       </div>
       <i class="fd-home-banner-bottom"></i>
     </div>
+    <div class="kaer-home-intro">
+      <h2>
+        <strong>快速、简单、易用的可视化搭建平台</strong>
+      </h2>
+    </div>
   </div>
 </template>
 
