@@ -1,17 +1,17 @@
 <template>
   <div id="pg-index">
-    <Header />
+    <Header/>
     <div class="kaer-home-banner">
       <div class="fd-home-banner-content">
         <div class="fd-home-banner-content-info">
-          <h1 class="" style="transform: translate(0px, 0px); opacity: 1">
+          <h1 class="" style="transform: translate(0px, 0px); opacity: 1;">
             极简制作，一键呈现
           </h1>
-          <p class="" style="transform: translate(0px, 0px); opacity: 1">
-            海量组件、模板，随意使用<br />
+          <p class="" style="transform: translate(0px, 0px); opacity: 1;">
+            海量组件、模板，随意使用<br/>
             支持自定义开发组件、模板，满足不同场景的业务诉求
           </p>
-          <div class="" style="transform: translate(0px, 0px); opacity: 1">
+          <div class="" style="transform: translate(0px, 0px); opacity: 1;">
             <router-link to="/dashboard" data-external="true">
               <button type="button" class="fdAnt-btn fd-guide-btn">
                 <span>开始使用</span>
@@ -36,21 +36,124 @@
           data-wow-offset="100"
       />
     </div>
+    <div class="kaer-feat">
+      <h2
+          data-wow-duration="1s"
+          data-wow-offset="300"
+          class="kaer-subtitle wow animate__fadeInUp"
+      >
+        功能特性<i></i>
+      </h2>
+      <section>
+        <div
+            data-wow-duration="1s"
+            data-wow-offset="300"
+            class="fd-home-feat-intro wow animate__fadeInLeft"
+        >
+          <i class="fd-home-icon fd-home-icon-1"></i>
+          <h4>精选模板</h4>
+          <p>提供了丰富的精选模板，覆盖众多场景，无需任何编程和设计经验，即可拥有一个专业的网站。</p>
+        </div>
+        <div
+            data-wow-duration="1s"
+            data-wow-offset="300"
+            class="fd-home-feat-img fd-home-feat-img-1 wow animate__fadeInRight"
+        >
+          <i class="fd-home-feat-img-1-1"></i>
+          <i class="fd-home-feat-img-1-2"></i>
+          <i class="fd-home-feat-img-1-3"></i>
+          <i class="fd-home-feat-img-1-4"></i>
+        </div>
+      </section>
+      <section>
+        <div
+            data-wow-duration="1s"
+            data-wow-offset="300"
+            class="fd-home-feat-intro wow animate__fadeInLeft"
+        >
+          <i class="fd-home-icon fd-home-icon-3"></i>
+          <h4>轻松拖拽</h4>
+          <p>基于组件的自由搭建，所见即所得的站点内容编辑，自定义站点搭建，满足品牌个性化需求。</p>
+        </div>
+        <div
+            data-wow-duration="1s"
+            data-wow-offset="350"
+            class="fd-home-feat-img fd-home-feat-img-3 wow animate__fadeInRight"
+        >
+          <i class="fd-home-feat-img-3-1"></i>
+          <i class="fd-home-feat-img-3-2"></i>
+          <i class="fd-home-feat-img-3-3"></i>
+          <i class="fd-home-feat-img-3-4"></i>
+        </div>
+      </section>
+      <section>
+        <div
+            data-wow-duration="1s"
+            data-wow-offset="300"
+            class="fd-home-feat-intro wow animate__fadeInLeft"
+        >
+          <i class="fd-home-icon fd-home-icon-5"></i>
+          <h4>互动营销</h4>
+          <p>通过各种插件，快速搭建线上互动场景，如：抽奖、报名、问卷、小游戏等，增加站点黏性，提升转化效果。</p>
+        </div>
+        <div
+            data-wow-duration="1s"
+            data-wow-offset="350"
+            class="fd-home-feat-img fd-home-feat-img-5 wow animate__fadeInRight"
+        >
+          <i class="fd-home-feat-img-5-1"></i>
+          <i class="fd-home-feat-img-5-2"></i>
+          <i class="fd-home-feat-img-5-3"></i>
+          <i class="fd-home-feat-img-5-4"></i>
+          <i class="fd-home-feat-img-5-5"></i>
+          <i class="fd-home-feat-img-5-6"></i>
+        </div>
+      </section>
+      <div class="fd-site-step">
+        <div class="fd-step-content">
+          <ul>
+            <li class="fd-step-content-item">
+              <i class="fd-site-step-icon fd-site-step-icon-2"></i>
+              <h4>1. 选择模板</h4>
+              <p>新建站点时，选择一个模板，定义站点名称和路径</p>
+            </li>
+            <li class="fd-step-content-item">
+              <i class="fd-site-step-icon fd-site-step-icon-3"></i>
+              <h4>2. 编辑内容</h4>
+              <p>根据站点功能和风格需要，添加页面、组件和填写页面内容</p>
+            </li>
+            <li class="fd-step-content-item">
+              <i class="fd-site-step-icon fd-site-step-icon-4"></i>
+              <h4>3. 发布站点</h4>
+              <p>预览确认无误后，提交站点发布并获得站点地址</p></li>
+          </ul>
+        </div>
+        <div class="fd-site-step-start">
+          <router-link to="/dashboard" data-external="true">
+            <button type="button" class="fdAnt-btn fd-guide-btn">
+              <span>开始使用</span>
+            </button>
+          </router-link>
+        </div>
+        <i class="fd-site-step-bg-right"></i>
+      </div>
     </div>
   </div>
 </template>
-
 <script>
-import Header from "@/components/header";
+import {WOW} from 'wowjs';
+import Header from '@/components/header';
+
 
 export default {
-  name: "intro",
+  setup() {
+    new WOW().init();
+  },
   components: {
     Header,
-  },
-};
+  }
+}
 </script>
-
 <style lang="scss">
 #pg-index {
   width: 100%;
@@ -100,11 +203,11 @@ export default {
     }
 
     p {
-      opacity: 0.65;
+      opacity: .65;
       margin-bottom: 52px;
       font-size: 20px;
       line-height: 28px;
-      color: hsla(0, 0%, 100%, 0.65);
+      color: hsla(0, 0%, 100%, .65);
     }
   }
 
@@ -140,7 +243,7 @@ export default {
     }
 
     p {
-      opacity: 0.45;
+      opacity: .45;
       margin-bottom: 72px;
       font-size: 20px;
       line-height: 28px;
@@ -151,7 +254,7 @@ export default {
       width: 1040px;
       height: 578px;
       margin: 0 auto;
-      box-shadow: 8px 8px 80px rgba(0, 0, 0, 0.15);
+      box-shadow: 8px 8px 80px rgba(0, 0, 0, .15);
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/XDRgdweMoqSasVzsDSES.png);
       background-size: 100% 100%;
     }
@@ -209,8 +312,7 @@ export default {
       display: inline-block;
     }
 
-    .fd-home-icon,
-    .fd-site-step-icon {
+    .fd-home-icon, .fd-site-step-icon {
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/YjGPYCcFoVFhERIOXGZr.png);
       background-size: 780px 100px;
     }
@@ -226,7 +328,7 @@ export default {
     p {
       font-size: 18px;
       line-height: 30px;
-      color: rgba(0, 0, 0, 0.65);
+      color: rgba(0, 0, 0, .65);
     }
   }
 
@@ -242,7 +344,7 @@ export default {
       left: 117px;
       width: 260px;
       height: 443px;
-      box-shadow: 4px 24px 100px rgba(0, 0, 0, 0.15);
+      box-shadow: 4px 24px 100px rgba(0, 0, 0, .15);
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/HJRfsSVKqSOdnCCBZTdI.png);
       background-size: 100% 100%;
     }
@@ -253,7 +355,7 @@ export default {
       left: 0;
       width: 276px;
       height: 233px;
-      box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.05);
+      box-shadow: 4px 4px 20px rgba(0, 0, 0, .05);
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/PLYifOOqJiivdUJUUeWs.png);
       background-size: 100% 100%;
     }
@@ -264,7 +366,7 @@ export default {
       left: 232px;
       width: 290px;
       height: 260px;
-      box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.05);
+      box-shadow: 4px 4px 20px rgba(0, 0, 0, .05);
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/UCzzHWTillHUawrVPNfU.png);
       background-size: 100% 100%;
     }
@@ -275,7 +377,7 @@ export default {
       left: 208px;
       width: 276px;
       height: 144px;
-      box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.05);
+      box-shadow: 4px 4px 20px rgba(0, 0, 0, .05);
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/CeXOjBlGqltuCpMwZiuE.png);
       background-size: 100% 100%;
     }
@@ -292,7 +394,7 @@ export default {
       left: 104px;
       width: 270px;
       height: 160px;
-      box-shadow: 3px 6px 40px rgba(0, 0, 0, 0.08);
+      box-shadow: 3px 6px 40px rgba(0, 0, 0, .08);
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/JKLbfClxovxtCRblKMsd.png);
       background-size: 100% 100%;
     }
@@ -303,7 +405,7 @@ export default {
       left: 80px;
       width: 270px;
       height: 160px;
-      box-shadow: 3px 16px 40px rgba(0, 0, 0, 0.08);
+      box-shadow: 3px 16px 40px rgba(0, 0, 0, .08);
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/vxZRGtIbKZRfdaAtuzgu.png);
       background-size: 100% 100%;
     }
@@ -314,7 +416,7 @@ export default {
       left: 264px;
       width: 217px;
       height: 392px;
-      box-shadow: 3px 6px 40px rgba(0, 0, 0, 0.08);
+      box-shadow: 3px 6px 40px rgba(0, 0, 0, .08);
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/AxeNZnhiXNkEsTdvqbCt.png);
       background-size: 100% 100%;
     }
@@ -325,7 +427,7 @@ export default {
       left: 0;
       width: 600px;
       height: 374px;
-      box-shadow: 4px 24px 100px rgba(0, 0, 0, 0.15);
+      box-shadow: 4px 24px 100px rgba(0, 0, 0, .15);
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/DskSTLaxbkyTahFUpQOz.png);
       background-size: 100% 100%;
     }
@@ -342,7 +444,7 @@ export default {
       left: 30px;
       width: 96px;
       height: 96px;
-      box-shadow: 3px 16px 40px rgba(0, 0, 0, 0.08);
+      box-shadow: 3px 16px 40px rgba(0, 0, 0, .08);
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/rqCeKRBmGZaZLwNZUdWs.png);
       background-size: 100% 100%;
     }
@@ -353,7 +455,7 @@ export default {
       left: 450px;
       width: 108px;
       height: 108px;
-      box-shadow: 3px 16px 40px rgba(0, 0, 0, 0.08);
+      box-shadow: 3px 16px 40px rgba(0, 0, 0, .08);
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/EXCuIRTRECHkxFwKwKyV.png);
       background-size: 100% 100%;
     }
@@ -375,7 +477,7 @@ export default {
       left: 116px;
       width: 375px;
       height: 386px;
-      box-shadow: 4px 24px 100px rgba(0, 0, 0, 0.15);
+      box-shadow: 4px 24px 100px rgba(0, 0, 0, .15);
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/oItEhVlQyzgiYkyDuBQc.png);
       background-size: 100% 100%;
     }
@@ -468,7 +570,7 @@ export default {
           right: -96px;
           width: 90px;
           height: 1px;
-          background-image: linear-gradient(90deg, hsla(0, 0%, 100%, 0), #fff);
+          background-image: linear-gradient(90deg,hsla(0,0%,100%,0),#fff);
         }
         &:after {
           content: "";
@@ -483,8 +585,7 @@ export default {
           background-color: #fff;
         }
         &:last-child {
-          &:before,
-          &:after {
+          &:before,&:after {
             display: none;
           }
         }
@@ -494,8 +595,7 @@ export default {
       width: 80px;
       height: 80px;
     }
-    .fd-home-icon,
-    .fd-site-step-icon {
+    .fd-home-icon, .fd-site-step-icon {
       background-image: url(https://gw.alipayobjects.com/zos/rmsportal/YjGPYCcFoVFhERIOXGZr.png);
       background-size: 780px 100px;
       display: inline-block;
