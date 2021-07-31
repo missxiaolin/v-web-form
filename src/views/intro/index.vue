@@ -27,6 +27,15 @@
       <h2>
         <strong>快速、简单、易用的可视化搭建平台</strong>
       </h2>
+      <p>
+        零门槛快速搭建、快速投放。数据实时回流，方便及时快速调整投放策略&方案
+      </p>
+      <div
+          class="wow animate__fadeInUp kaer-home-intro-img"
+          data-wow-duration="1s"
+          data-wow-offset="100"
+      />
+    </div>
     </div>
   </div>
 </template>
